@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스몰닷 SMALLDOT</title>
+<meta name="description" content="스몰닷은 이커머스 분야에서 긍정의 힘을 기반으로 하는 회사입니다. 건강기능식품 브랜드 Onwell과 프리미엄 헬스케어기기 브랜드 Heyflow를 운영합니다.">
+<meta property="og:title" content="스몰닷 SMALLDOT">
+<meta property="og:description" content="긍정적인 변화의 시작, 스몰닷입니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://smalldot.kr">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root {
+    --ink: #111111;
+    --ink-2: #555555;
+    --muted: #8a8a8a;
+    --line: #e6e6e6;
+    --paper: #ffffff;
+    --soft: #f5f5f4;
+    --max: 1120px;
+    --gutter: clamp(20px, 5vw, 48px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--paper); color: var(--ink);
+    line-height: 1.7; letter-spacing: -0.01em; word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* ── 상단 바 ── */
+  header {
+    position: fixed; inset: 0 0 auto 0; z-index: 10;
+    transition: background .25s, border-color .25s;
+    border-bottom: 1px solid transparent;
+  }
+  header.scrolled { background: rgba(255,255,255,.92); backdrop-filter: blur(10px); border-color: var(--line); }
+  header .wrap { height: 68px; display: flex; align-items: center; justify-content: space-between; }
+  header .logo img { height: 18px; width: auto; }
+  header .logo .white { display: block; }
+  header .logo .black { display: none; }
+  header.scrolled .logo .white { display: none; }
+  header.scrolled .logo .black { display: block; }
+  nav { display: flex; gap: 28px; font-size: 14px; font-weight: 500; }
+  nav a { color: rgba(255,255,255,.75); transition: color .2s; }
+  nav a:hover { color: #fff; }
+  header.scrolled nav a { color: var(--ink-2); }
+  header.scrolled nav a:hover { color: var(--ink); }
+  @media (max-width: 640px) { nav { display: none; } }
+
+  /* ── 히어로 ── */
+  .hero {
+    min-height: 100svh; background: var(--ink); color: #fff;
+    display: flex; align-items: center; position: relative; overflow: hidden;
+  }
+  .hero .wrap { width: 100%; padding-top: 68px; }
+  .hero .eyebrow { font-size: 13px; letter-spacing: .2em; color: rgba(255,255,255,.5); font-weight: 600; margin-bottom: 28px; }
+  .hero h1 {
+    font-size: clamp(40px, 8.4vw, 104px); line-height: 1.04; font-weight: 800; letter-spacing: -0.035em;
+  }
+  .hero h1 .dot {
+    display: inline-block; width: .2em; height: .2em; border-radius: 50%; background: #fff;
+    margin-left: .06em; vertical-align: baseline;
+  }
+  .hero p.lead { margin-top: 32px; font-size: clamp(17px, 2vw, 21px); color: rgba(255,255,255,.72); max-width: 32em; }
+  .hero .big-dot {
+    position: absolute; right: -8vw; bottom: -10vw; width: 38vw; height: 38vw; min-width: 260px; min-height: 260px;
+    border-radius: 50%; border: 1px solid rgba(255,255,255,.12);
+  }
+  .hero .big-dot::after {
+    content: ""; position: absolute; inset: 34%; border-radius: 50%; background: rgba(255,255,255,.06);
+  }
+  .scroll-hint {
+    position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%);
+    font-size: 11px; letter-spacing: .2em; color: rgba(255,255,255,.4);
+  }
+
+  /* ── 공통 섹션 ── */
+  section.block { padding: clamp(88px, 13vw, 160px) 0; border-top: 1px solid var(--line); }
+  section.block:first-of-type { border-top: 0; }
+  .sec-head { display: grid; grid-template-columns: 200px 1fr; gap: 32px; margin-bottom: 56px; }
+  .sec-num { font-size: 13px; font-weight: 600; letter-spacing: .14em; color: var(--muted); padding-top: 10px; }
+  .sec-num b { color: var(--ink); font-weight: 700; }
+  .sec-title { font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.25; letter-spacing: -0.03em; }
+  .sec-body { margin-left: 232px; }
+  @media (max-width: 820px) {
+    .sec-head { grid-template-columns: 1fr; gap: 12px; margin-bottom: 40px; }
+    .sec-num { padding-top: 0; }
+    .sec-body { margin-left: 0; }
+  }
+
+  /* About */
+  .about-text { font-size: clamp(19px, 2.3vw, 24px); line-height: 1.75; color: var(--ink-2); max-width: 36em; }
+  .about-text strong { color: var(--ink); font-weight: 700; }
+
+  /* Business */
+  .biz-intro { color: var(--ink-2); font-size: 17px; margin-bottom: 40px; max-width: 36em; }
+  .brands { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .brand {
+    border: 1px solid var(--line); border-radius: 20px; padding: 36px 32px 32px;
+    display: flex; flex-direction: column; min-height: 260px; background: var(--paper);
+    transition: border-color .2s, transform .2s;
+  }
+  .brand:hover { border-color: var(--ink); transform: translateY(-2px); }
+  .brand .cat { font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: .04em; }
+  .brand h3 { font-size: 34px; font-weight: 800; letter-spacing: -0.03em; margin-top: 10px; }
+  .brand p { color: var(--ink-2); margin-top: 12px; font-size: 16px; }
+  .brand .mark { margin-top: auto; padding-top: 28px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+  .brand .mark i { width: 8px; height: 8px; border-radius: 50%; background: var(--ink); display: inline-block; }
+  @media (max-width: 720px) { .brands { grid-template-columns: 1fr; } .brand { min-height: 0; } }
+
+  /* Vision */
+  .vision { background: var(--soft); }
+  .vision blockquote {
+    font-size: clamp(34px, 6vw, 72px); font-weight: 800; line-height: 1.1; letter-spacing: -0.04em;
+  }
+  .vision blockquote em { font-style: normal; color: var(--muted); text-decoration: line-through; text-decoration-thickness: 3px; }
+  .vision .vision-text { margin-top: 36px; font-size: 18px; color: var(--ink-2); max-width: 34em; }
+
+  /* Core values */
+  .values { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--ink); }
+  .value { padding: 36px 32px 40px 0; border-bottom: 1px solid var(--line); }
+  .value:nth-child(odd) { border-right: 1px solid var(--line); }
+  .value:nth-child(even) { padding-left: 32px; }
+  .value .no { font-size: 13px; font-weight: 700; color: var(--muted); }
+  .value h3 { font-size: 22px; font-weight: 700; margin-top: 14px; letter-spacing: -0.02em; }
+  .value .en { font-size: 13px; color: var(--muted); margin-top: 2px; font-weight: 500; }
+  .value p { margin-top: 16px; color: var(--ink-2); font-size: 15.5px; }
+  @media (max-width: 720px) {
+    .values { grid-template-columns: 1fr; }
+    .value, .value:nth-child(even) { padding: 32px 0 36px; border-right: 0 !important; }
+  }
+
+  /* Contact */
+  .contact { background: var(--ink); color: #fff; border-top: 0 !important; }
+  .contact .sec-num { color: rgba(255,255,255,.45); }
+  .contact .sec-num b { color: #fff; }
+  .contact-list { display: grid; gap: 0; border-top: 1px solid rgba(255,255,255,.2); }
+  .contact-row {
+    display: grid; grid-template-columns: 140px 1fr auto; align-items: center; gap: 16px;
+    padding: 26px 0; border-bottom: 1px solid rgba(255,255,255,.12);
+  }
+  .contact-row .k { font-size: 13px; letter-spacing: .1em; color: rgba(255,255,255,.45); font-weight: 600; }
+  .contact-row .v { font-size: clamp(18px, 2.4vw, 26px); font-weight: 600; letter-spacing: -0.02em; }
+  .contact-row .go { font-size: 13px; color: rgba(255,255,255,.55); white-space: nowrap; }
+  a.contact-row:hover .v { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
+  a.contact-row:hover .go { color: #fff; }
+  @media (max-width: 640px) {
+    .contact-row { grid-template-columns: 1fr auto; row-gap: 6px; }
+    .contact-row .k { grid-column: 1 / -1; }
+  }
+
+  footer { background: var(--ink); color: rgba(255,255,255,.4); font-size: 13px; }
+  footer .wrap { padding-top: 48px; padding-bottom: 48px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,.12); }
+  footer img { height: 14px; width: auto; opacity: .7; }
+
+  /* 등장 애니메이션 */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="스몰닷 홈">
+      <img class="white" src="assets/smalldot-logo-white.png" alt="SMALLDOT">
+      <img class="black" src="assets/smalldot-logo-black.png" alt="SMALLDOT">
+    </a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#business">Business</a>
+      <a href="#vision">Vision</a>
+      <a href="#values">Values</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="big-dot" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="eyebrow reveal">STARTING FROM SMALLDOT</div>
+      <h1 class="reveal">긍정적인 변화의<br>시작, 스몰닷<span class="dot"></span></h1>
+      <p class="lead reveal">작은 시작이 큰 변화를 이끈다는 믿음으로,<br>이커머스에서 건강한 일상을 만듭니다.</p>
+    </div>
+    <div class="scroll-hint">SCROLL</div>
+  </section>
+
+  <section class="block" id="about">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num"><b>01</b> — ABOUT</div>
+        <h2 class="sec-title">작은 점 하나가<br>문장을 바꿉니다</h2>
+      </div>
+      <div class="sec-body reveal">
+        <p class="about-text">
+          <strong>스몰닷(SMALLDOT)</strong>은 이커머스 분야에서 <strong>긍정의 힘</strong>을 기반으로 하는 회사로,
+          작은 시작이 큰 변화를 이끈다는 믿음을 가지고 설립되었습니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="business">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num"><b>02</b> — BUSINESS</div>
+        <h2 class="sec-title">이커머스 E-commerce</h2>
+      </div>
+      <div class="sec-body">
+        <p class="biz-intro reveal">스몰닷은 이커머스 기반의 회사로 건강기능식품 브랜드와 프리미엄 헬스케어기기 브랜드를 운영하고 있습니다.</p>
+        <div class="brands">
+          <div class="brand reveal">
+            <div class="cat">건강기능식품</div>
+            <h3>Onwell</h3>
+            <div class="mark"><i></i>Brand of SMALLDOT</div>
+          </div>
+          <div class="brand reveal">
+            <div class="cat">프리미엄 헬스케어기기</div>
+            <h3>Heyflow</h3>
+            <div class="mark"><i></i>Brand of SMALLDOT</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block vision" id="vision">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num"><b>03</b> — VISION</div>
+        <div></div>
+      </div>
+      <div class="sec-body">
+        <blockquote class="reveal"><em>Impossible?</em><br>No, I’m possible.</blockquote>
+        <p class="vision-text reveal">문장에 작은 점 하나만 찍어도 완전히 다른 문장이 되듯, 작은 점 하나가 주는 긍정의 힘을 믿습니다. 새로운 가능성과 긍정적인 영향력을 만들기 위해 노력하는 스몰닷입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="values">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num"><b>04</b> — CORE VALUES</div>
+        <h2 class="sec-title">스몰닷이 일하는 방식</h2>
+      </div>
+      <div class="sec-body">
+        <div class="values">
+          <div class="value reveal">
+            <div class="no">01</div>
+            <h3>작은 시작의 힘</h3>
+            <div class="en">Power of Small Beginnings</div>
+            <p>작은 시작이라도 변화를 이끄는 힘을 믿습니다. 작은 시작 하나가 주는 변화를 기반으로 끊임없이 성장하고 발전합니다.</p>
+          </div>
+          <div class="value reveal">
+            <div class="no">02</div>
+            <h3>긍정의 힘</h3>
+            <div class="en">Power of Positivity</div>
+            <p>긍정적인 사고와 태도를 중요하게 여깁니다. 낙관에 기반한 업무 문화 속에서 함께 협력하며, 어려운 상황에서도 해결책을 찾아 도전합니다.</p>
+          </div>
+          <div class="value reveal">
+            <div class="no">03</div>
+            <h3>혁신과 창의성</h3>
+            <div class="en">Innovation &amp; Creativity</div>
+            <p>새로운 시각과 아이디어를 수용하고 존중합니다. 빠르게 변하는 이커머스 분야에서 앞서 나가기 위해 지속적인 변화와 새로운 시도를 장려합니다.</p>
+          </div>
+          <div class="value reveal">
+            <div class="no">04</div>
+            <h3>고객 중심</h3>
+            <div class="en">Customer-Centric</div>
+            <p>언제나 고객의 만족에 초점을 둡니다. 고객과의 긴밀한 소통을 통해 서비스와 제품을 지속적으로 개선해 나갑니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block contact" id="contact">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num"><b>05</b> — CONTACT</div>
+        <h2 class="sec-title">함께할 이야기가 있다면<br>언제든 연락 주세요</h2>
+      </div>
+      <div class="sec-body">
+        <div class="contact-list reveal">
+          <a class="contact-row" href="mailto:smalldotcorp@gmail.com">
+            <span class="k">EMAIL</span>
+            <span class="v">smalldotcorp@gmail.com</span>
+            <span class="go">메일 보내기 →</span>
+          </a>
+          <a class="contact-row" href="tel:07080643956">
+            <span class="k">TEL</span>
+            <span class="v">070-8064-3956</span>
+            <span class="go">전화 걸기 →</span>
+          </a>
+          <a class="contact-row" href="https://map.naver.com/p/search/%EB%8C%80%EC%A0%84%20%EC%84%9C%EA%B5%AC%20%EB%AC%B8%EC%A0%95%EB%A1%9C%2012" target="_blank" rel="noopener">
+            <span class="k">ADDRESS</span>
+            <span class="v">대전광역시 서구 문정로 12<br>중도벤처타운빌딩 403호</span>
+            <span class="go">지도 보기 →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="assets/smalldot-logo-white.png" alt="SMALLDOT">
+    <span>© <span id="yr">2026</span> SMALLDOT. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+  const header = document.getElementById('top');
+  const hero = document.querySelector('.hero');
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > hero.offsetHeight - 80);
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
