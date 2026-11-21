@@ -1,0 +1,13 @@
+BEGIN:VCARD
+VERSION:3.0
+N:김;태영;;;
+FN:김태영
+ORG:스몰닷 SMALLDOT
+TITLE:대표 CEO
+TEL;TYPE=CELL:+82-10-5242-3952
+TEL;TYPE=WORK,VOICE:+82-70-8064-3956
+EMAIL;TYPE=INTERNET,WORK:ceo@smalldot.kr
+ADR;TYPE=WORK:;;문정로 12 중도벤처타운빌딩 403호;서구;대전광역시;;대한민국
+URL:https://smalldot.kr
+NOTE:Start with a dot. 긍정적인 변화의 시작\, 스몰닷
+END:VCARD
