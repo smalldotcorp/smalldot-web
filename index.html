@@ -243,6 +243,11 @@
   .contact .sec-num b { color: #fff; }
   .contact-big { font-size: clamp(44px, 9vw, 120px); font-weight: 800; letter-spacing: -0.05em; line-height: 1.02; margin-bottom: 72px; }
   .contact-big .o { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,.6); }
+  .contact-big .end-dot {
+    display: inline-block; width: .2em; height: .2em; border-radius: 50%; background: #fff; margin-left: .06em;
+    opacity: 0; transform: translateY(-3em) scale(.4);
+  }
+  .contact-big.in .end-dot { animation: drop 1s .6s var(--ease) forwards; }
   .contact-list { border-top: 1px solid rgba(255,255,255,.2); }
   .contact-row {
     display: grid; grid-template-columns: 140px 1fr auto; align-items: center; gap: 16px;
@@ -275,7 +280,7 @@
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
     .reveal, .line > span, .hero p.lead, .hero .eyebrow { opacity: 1 !important; transform: none !important; }
-    .hero h1 .dot { opacity: 1; transform: none; }
+    .hero h1 .dot, .contact-big .end-dot { opacity: 1; transform: none; }
     .morph .ins { max-width: .6em; } .morph .apos b { opacity: 1; transform: none; } .morph .q { opacity: 0; }
   }
 </style>
@@ -419,7 +424,7 @@
         <div class="sec-num"><b>05</b>CONTACT</div>
         <div></div>
       </div>
-      <div class="contact-big reveal">Let’s start<br><span class="o">small</span>.</div>
+      <div class="contact-big reveal">Start with<br>a <span class="o">dot</span><span class="end-dot" aria-hidden="true"></span></div>
       <div class="sec-body">
         <div class="contact-list reveal">
           <a class="contact-row" href="mailto:smalldotcorp@gmail.com">
