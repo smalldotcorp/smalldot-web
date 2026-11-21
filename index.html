@@ -191,17 +191,21 @@
   @media (max-width: 720px) { .brands { grid-template-columns: 1fr; } .brand { min-height: 220px; } }
 
   /* Vision: Impossible → I'm possible */
-  .vision { background: var(--ink); color: #fff; overflow: hidden; }
+  .vision { background: var(--ink); color: #fff; }
   .vision .sec-num { color: rgba(255,255,255,.4); }
   .vision .sec-num b { color: #fff; }
   .morph { font-size: clamp(40px, 12vw, 150px); font-weight: 800; letter-spacing: -0.05em; line-height: 1; white-space: nowrap; }
-  .morph .ins { display: inline-block; max-width: 0; overflow: hidden; vertical-align: bottom; transition: max-width 1s var(--ease); }
-  .morph .apos { color: #fff; position: relative; }
-  .morph .apos b { display: inline-block; transform: translateY(-1.4em); opacity: 0; transition: transform .9s .35s var(--ease), opacity .4s .35s; font-weight: 800; }
-  .morph.go .ins { max-width: .6em; }
-  .morph.go .apos b { transform: none; opacity: 1; }
-  .morph .q { color: rgba(255,255,255,.35); transition: opacity .6s .2s; }
-  .morph.go .q { opacity: 0; }
+  /* 스크롤하는 동안 화면에 고정된 채로 글자가 바뀜 (--p: 0→1) */
+  .vision { padding: 0 !important; height: 260vh; }
+  .vision .pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; align-items: center; overflow: hidden; }
+  .vision .pin > .wrap { width: 100%; }
+  .morph { --m: 0; color: rgb(calc(140 + 115 * var(--m)) calc(140 + 115 * var(--m)) calc(140 + 115 * var(--m))); }
+  .morph .ins { display: inline-block; max-width: calc(.6em * var(--m)); overflow: hidden; vertical-align: bottom; }
+  .morph .apos b { display: inline-block; font-weight: 800; color: #fff; opacity: var(--m); transform: translateY(calc(-1.4em * (1 - var(--m)))); }
+  .morph .q { opacity: calc(1 - var(--m) * 2); }
+  .vision .caption, .vision .vision-text { opacity: var(--t, 0); transform: translateY(calc(24px * (1 - var(--t, 0)))); }
+  .vision .meter { margin-top: 40px; width: 120px; height: 2px; background: rgba(255,255,255,.15); position: relative; overflow: hidden; }
+  .vision .meter::after { content: ""; position: absolute; inset: 0; background: #fff; transform-origin: 0 50%; transform: scaleX(var(--m)); }
   .vision .caption { margin-top: 28px; font-size: 15px; color: rgba(255,255,255,.45); display: flex; align-items: center; gap: 10px; }
   .vision .caption::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #fff; }
   .vision .vision-text { margin-top: 56px; font-size: clamp(17px, 1.8vw, 20px); color: rgba(255,255,255,.7); max-width: 32em; }
@@ -281,7 +285,7 @@
     *, *::before, *::after { animation: none !important; transition: none !important; }
     .reveal, .line > span, .hero p.lead, .hero .eyebrow { opacity: 1 !important; transform: none !important; }
     .hero h1 .dot, .contact-big .end-dot { opacity: 1; transform: none; }
-    .morph .ins { max-width: .6em; } .morph .apos b { opacity: 1; transform: none; } .morph .q { opacity: 0; }
+    .vision { height: auto; } .vision .pin { position: static; height: auto; padding: 120px 0; }
   }
 </style>
 </head>
@@ -371,6 +375,7 @@
   </section>
 
   <section class="block vision" id="vision">
+    <div class="pin">
     <div class="bg-dot" aria-hidden="true"></div>
     <div class="wrap">
       <div class="sec-head reveal">
@@ -379,11 +384,13 @@
       </div>
       <div class="sec-body">
         <div class="morph" aria-label="Impossible? No, I'm possible.">
-          <span aria-hidden="true">I<span class="ins apos"><b>’</b></span>m<span class="ins"> </span>possible<span class="q">?</span></span>
+          <span aria-hidden="true">I<span class="ins apos"><b>’</b></span>m<span class="ins">&nbsp;</span>possible<span class="q">?</span></span>
         </div>
-        <div class="caption reveal">점 하나가 문장을 바꿉니다</div>
-        <p class="vision-text reveal">문장에 작은 점 하나만 찍어도 완전히 다른 문장이 되듯, 작은 점 하나가 주는 긍정의 힘을 믿습니다. 새로운 가능성과 긍정적인 영향력을 만들기 위해 노력하는 스몰닷입니다.</p>
+        <div class="meter" aria-hidden="true"></div>
+        <div class="caption">점 하나가 문장을 바꿉니다</div>
+        <p class="vision-text">문장에 작은 점 하나만 찍어도 완전히 다른 문장이 되듯, 작은 점 하나가 주는 긍정의 힘을 믿습니다. 새로운 가능성과 긍정적인 영향력을 만들기 위해 노력하는 스몰닷입니다.</p>
       </div>
+    </div>
     </div>
   </section>
 
@@ -482,11 +489,23 @@
   }), { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // Impossible → I'm possible
+  // Impossible → I'm possible : 스크롤 위치에 따라 바뀜 (되돌리면 다시 Impossible)
+  const vision = document.getElementById('vision');
   const morph = document.querySelector('.morph');
-  new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) setTimeout(() => morph.classList.add('go'), 500);
-  }), { threshold: 0.6 }).observe(morph);
+  const clamp = v => Math.min(1, Math.max(0, v));
+  const ease = t => 1 - Math.pow(1 - t, 3);
+  const onVision = () => {
+    if (reduce) { vision.style.setProperty('--t', 1); morph.style.setProperty('--m', 1); document.querySelector('.meter').style.setProperty('--m', 1); return; }
+    const r = vision.getBoundingClientRect();
+    const p = clamp(-r.top / (r.height - innerHeight));      // 고정 구간 진행도
+    const m = ease(clamp((p - 0.12) / 0.45));                  // 12%~57%: 글자 변환
+    const t = ease(clamp((p - 0.55) / 0.3));                   // 55%~85%: 설명 등장
+    morph.style.setProperty('--m', m.toFixed(3));
+    document.querySelector('.meter').style.setProperty('--m', m.toFixed(3));
+    vision.style.setProperty('--t', t.toFixed(3));
+  };
+  addEventListener('scroll', onVision, { passive: true });
+  addEventListener('resize', onVision); onVision();
 
   // 스크롤 연동: 상단 바, 진행 막대, 현재 메뉴, About 글자, 히어로 원
   const header = document.getElementById('top');
